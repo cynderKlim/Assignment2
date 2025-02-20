@@ -74,8 +74,17 @@ else
                 else
                 {
                     UInt64 Id = Ids.Max() + 1;
-                    Console.WriteLine($"{Id}, {Name}");
-                }
+                    // input character description
+                    Console.WriteLine("Enter description:");
+                    string? Description = Console.ReadLine();
+                    Console.WriteLine("Enter species: ");
+                    string? characterSpecies = Console.ReadLine();
+                    Console.WriteLine("Enter character's first appearance: ");
+                    string? characterFirstAppearance = Console.ReadLine();
+                    Console.WriteLine("Enter year created: ");
+                    string? characterYearCreated = Console.ReadLine(); 
+
+                    Console.WriteLine($"{Id}, {Name}, {Description}, {characterSpecies}, {characterFirstAppearance}, {characterYearCreated}");                }
             } else {
                 logger.Error("You must enter a name");
             }
