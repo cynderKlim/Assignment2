@@ -32,7 +32,16 @@ else
         while (!sr.EndOfStream)
         {
             string? line = sr.ReadLine();
-            Console.WriteLine(line);
+            if (line is not null)
+            {
+                string[] characterDetails = line.Split(',');
+                Ids.Add(UInt64.Parse(characterDetails[0]));
+                Names.Add(characterDetails[1]);
+                Descriptions.Add(characterDetails[2]);
+                Species.Add(characterDetails[3]);
+                FirstAppearance.Add(characterDetails[4]);
+                YearCreated.Add(UInt64.Parse(characterDetails[5]));
+            }        
         }
         sr.Close();
     }
