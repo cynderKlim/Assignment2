@@ -66,8 +66,16 @@ else
             Console.WriteLine("Enter new character name: ");
             string? Name = Console.ReadLine();
             if (!string.IsNullOrEmpty(Name)){
-                UInt64 Id = Ids.Max() + 1;
-                Console.WriteLine($"{Id}, {Name}");
+                List<string> LowerCaseNames = Names.ConvertAll(n => n.ToLower());
+                if (LowerCaseNames.Contains(Name.ToLower()))
+                {
+                    logger.Info($"Duplicate name {Name}");
+                }
+                else
+                {
+                    UInt64 Id = Ids.Max() + 1;
+                    Console.WriteLine($"{Id}, {Name}");
+                }
             } else {
                 logger.Error("You must enter a name");
             }
