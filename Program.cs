@@ -18,10 +18,10 @@ else
     // lists are used since we do not know number of lines of data
     List<UInt64> Ids = [];
     List<string> Names = [];
-    List<string> Descriptions = [];
-    List<string> Species = [];
-    List<string> FirstAppearance = [];
-    List<UInt64> YearCreated = [];
+    List<string?> Descriptions = [];
+    List<string?> Species = [];
+    List<string?> FirstAppearance = [];
+    List<string?> YearCreated = [];
 
     // to populate the lists with data, read from the data file
     try
@@ -40,8 +40,8 @@ else
                 Descriptions.Add(characterDetails[2]);
                 Species.Add(characterDetails[3]);
                 FirstAppearance.Add(characterDetails[4]);
-                YearCreated.Add(UInt64.Parse(characterDetails[5]));
-            }        
+                YearCreated.Add(characterDetails[5]);
+            }
         }
         sr.Close();
     }
@@ -65,7 +65,8 @@ else
         {
             Console.WriteLine("Enter new character name: ");
             string? Name = Console.ReadLine();
-            if (!string.IsNullOrEmpty(Name)){
+            if (!string.IsNullOrEmpty(Name))
+            {
                 List<string> LowerCaseNames = Names.ConvertAll(n => n.ToLower());
                 if (LowerCaseNames.Contains(Name.ToLower()))
                 {
@@ -75,17 +76,32 @@ else
                 {
                     UInt64 Id = Ids.Max() + 1;
                     // input character description
-                    Console.WriteLine("Enter description:");
+                    Console.WriteLine("Enter description: ");
                     string? Description = Console.ReadLine();
                     Console.WriteLine("Enter species: ");
                     string? characterSpecies = Console.ReadLine();
                     Console.WriteLine("Enter character's first appearance: ");
                     string? characterFirstAppearance = Console.ReadLine();
                     Console.WriteLine("Enter year created: ");
-                    string? characterYearCreated = Console.ReadLine(); 
+                    string? characterYearCreated = Console.ReadLine();
 
-                    Console.WriteLine($"{Id}, {Name}, {Description}, {characterSpecies}, {characterFirstAppearance}, {characterYearCreated}");                }
-            } else {
+                    StreamWriter sw = new(file, true);
+                    sw.WriteLine($"{Id}, {Name}, {Description}, {characterSpecies}, {characterFirstAppearance}, {characterYearCreated}");
+
+                    sw.Close();
+                    // add new character details to Lists
+                    Ids.Add(Id);
+                    Names.Add(Name);
+                    Descriptions.Add(Description);
+                    Species.Add(characterSpecies);
+                    FirstAppearance.Add(characterFirstAppearance);
+                    YearCreated.Add(characterYearCreated);
+                    // log transaction
+                    logger.Info($"Character id {Id} added");
+                }
+            }
+            else
+            {
                 logger.Error("You must enter a name");
             }
         }
